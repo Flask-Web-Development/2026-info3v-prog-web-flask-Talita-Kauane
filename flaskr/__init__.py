@@ -25,7 +25,7 @@ def create_app(test_config=None):
     @app.route('/hello')
     def hello():
         return 'Hello, World!'
-flaskr/__init__.py
+
 def create_app():
     app = ...
     # existing code omitted
