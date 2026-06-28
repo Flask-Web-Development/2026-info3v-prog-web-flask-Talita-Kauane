@@ -4,6 +4,8 @@ from flask import Flask
 
 
 def create_app(test_config=None):
+    from . import db
+    db.init_app(app)
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
@@ -43,5 +45,10 @@ def init_db_command():
 sqlite3.register_converter(
     "timestamp", lambda v: datetime.fromisoformat(v.decode())
 )
+
+def init_app(app):
+    app.teardown_appcontext(close_db)
+    app.cli.add_command(init_db_command)
+
 
     return app
