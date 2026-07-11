@@ -12,8 +12,10 @@ CREATE TABLE personagem (
   user_id INTEGER NOT NULL,
   criado TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   nome TEXT NOT NULL,
-  raca TEXT NOT NULL,
+  especie TEXT NOT NULL,
   alinhamento TEXT,
+  pronomes TEXT,
+  ocupacao TEXT,
   biografia TEXT NOT NULL,
   imagem_url TEXT,
   FOREIGN KEY (user_id) REFERENCES user (id)
