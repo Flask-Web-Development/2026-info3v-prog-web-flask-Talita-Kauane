@@ -1,0 +1,20 @@
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS personagem;
+
+CREATE TABLE user (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL
+);
+
+CREATE TABLE personagem (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  criado TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  nome TEXT NOT NULL,
+  raca TEXT NOT NULL,
+  alinhamento TEXT,
+  biografia TEXT NOT NULL,
+  imagem_url TEXT,
+  FOREIGN KEY (user_id) REFERENCES user (id)
+);
