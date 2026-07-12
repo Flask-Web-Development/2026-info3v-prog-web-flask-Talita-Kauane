@@ -7,51 +7,104 @@
   
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      background-color: #faf6f0 !important; /* Areia bem suave */
+      color: #4a3f35;
+    }
+    .custom-navbar {
+      background-color: #d98a6c !important; /* Terracota suave */
+    }
+    .btn-primary {
+      background-color: #e29578 !important; /* Pêssego caloroso */
+      border-color: #e29578 !important;
+      color: #fff !important;
+    }
+    .btn-primary:hover {
+      background-color: #cd8165 !important;
+      border-color: #cd8165 !important;
+    }
+    .btn-outline-light {
+      color: #fff !important;
+      border-color: rgba(255, 255, 255, 0.6) !important;
+    }
+    .btn-outline-light:hover {
+      background-color: rgba(255, 255, 255, 0.2) !important;
+    }
+    .navbar-brand {
+      font-size: 1.75rem !important; /* Aumenta consideravelmente o título */
+      letter-spacing: 1px;
+    }
+  </style>
 </head>
-<body class="bg-light">
+<body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow-sm">
-    <div class="container">
-      <a class="navbar-brand fw-bold text-uppercase tracking-wider" href="{{ url_for('blog.index') }}">
+  <nav class="navbar navbar-expand-lg navbar-dark custom-navbar mb-5 shadow-sm py-3">
+    <div class="container flex-column flex-md-row text-center text-md-start">
+      
+      <a class="navbar-brand fw-bold text-uppercase mb-3 mb-md-0" href="#">
         ✨ OC Tracker
       </a>
       
-      <div class="ms-auto">
-        <ul class="navbar-nav align-items-center">
-          {% if g.user %}
-            <li class="nav-item me-3 text-light opacity-75">
-              Olá, <strong>{{ g.user['username'] }}</strong>
-            </li>
-            <li class="nav-item">
-              <a class="btn btn-outline-danger btn-sm" href="{{ url_for('auth.logout') }}">Log Out</a>
-            </li>
+      <div class="ms-md-auto">
+        <div class="d-flex align-items-center justify-content-center gap-2">
+{% if g.user %}
+            <span class="text-light me-2">Olá, <strong>{{ g.user['username'] }}</strong></span>
+            <a class="btn btn-outline-light px-4" href="{{ url_for('auth.logout') }}">Log Out</a>
           {% else %}
-            <li class="nav-item me-2">
-              <a class="btn btn-outline-light btn-sm" href="{{ url_for('auth.login') }}">Log In</a>
-            </li>
-            <li class="nav-item">
-              <a class="btn btn-primary btn-sm" href="{{ url_for('auth.register') }}">Register</a>
-            </li>
+            <a class="btn btn-outline-light px-4" href="{{ url_for('auth.login') }}">Log In</a>
+            <a class="btn btn-primary px-4 shadow-sm fw-bold" href="{{ url_for('auth.register') }}">Register</a>
           {% endif %}
-        </ul>
+        </div>
       </div>
+
     </div>
   </nav>
 
-  <main class="container my-4">
-    <header class="mb-4">
-      {% block header %}{% endblock %}
-    </header>
-
-    {% for message in get_flashed_messages() %}
-      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        {{ message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<!-- Conteúdo Principal com Banners Laterais -->
+<main class="container-fluid px-0 my-4">
+    <div class="row g-0 justify-content-center align-items-stretch" style="min-height: 70vh;">
+      
+      <div class="col-lg-2 d-none d-lg-block">
+        <div class="h-100 px-2 d-flex flex-column justify-content-between">
+          <img src="https://lh3.googleusercontent.com/pw/AP1GczMFmYJBkxmkYbjTIh6uRzZOX2_doH6_Fu46WSXkSOQU1hf3dRAjJTyYbX_UfPGf9E-3UeetZ14mLZZWFjGKxcdN6FCEzuNqb5tpZ32KGGtBfTqcA8EZ78bLLg5intLOGsbaUsCNDWvMZP7RYpLzAD0oEQ=w645-h913-s-no-gm?authuser=0" 
+               class="img-fluid rounded-4 shadow-sm w-100 flex-grow-1 mb-2" 
+               style="object-fit: cover; min-height: 420px;" 
+               alt="Banner Esquerdo Decorativo">
+          <div class="text-center fw-bold small text-uppercase tracking-wide" style="color: #4a3f35;">
+            ✨ OC - Reshdramalor Mo'zarg
+          </div>
+        </div>
       </div>
-    {% endfor %}
 
-    {% block content %}{% endblock %}
+      <div class="col-12 col-md-9 col-lg-6 px-4 d-flex flex-column">
+        <header class="mb-4 text-center text-md-start">
+          {% block header %}{% endblock %}
+        </header>
+
+        {% for message in get_flashed_messages() %}
+          <div class="alert alert-warning alert-dismissible fade show border-0 shadow-sm" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+
+        {% block content %}{% endblock %}
+      </div>
+
+      <div class="col-lg-2 d-none d-lg-block">
+        <div class="h-100 px-2 d-flex flex-column justify-content-between">
+          <img src="https://lh3.googleusercontent.com/pw/AP1GczPj_GChpHD6BndfyCXBQknmA814Fde4kYvSpjE8a9R0Til0_sT8OnQwM0oc80gxEUtAavig6S906iOFEv1OCc8Rl-1sa95P2zisLF1KQDq_i9g2cIZPUFzp7A_9J-t6ZbUL5YaBg8hX5-Afn7Hd7h0Dkg=w691-h913-s-no-gm?authuser=00" 
+               class="img-fluid rounded-4 shadow-sm w-100 flex-grow-1 mb-2" 
+               style="object-fit: cover; min-height: 420px;" 
+               alt="Banner Direito Decorativo">
+          <div class="text-center fw-bold small text-uppercase tracking-wide" style="color: #4a3f35;">
+            ✨ OC - Ravi Patel
+          </div>
+        </div>
+      </div>
+
+    </div>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
