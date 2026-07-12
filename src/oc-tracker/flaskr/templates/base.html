@@ -65,6 +65,7 @@
 <main class="container-fluid px-0 my-4">
     <div class="row g-0 justify-content-center align-items-stretch" style="min-height: 70vh;">
       
+      {% if request.endpoint in ['auth.login', 'auth.register'] %}
       <div class="col-lg-2 d-none d-lg-block">
         <div class="h-100 px-2 d-flex flex-column justify-content-between">
           <img src="https://lh3.googleusercontent.com/pw/AP1GczMFmYJBkxmkYbjTIh6uRzZOX2_doH6_Fu46WSXkSOQU1hf3dRAjJTyYbX_UfPGf9E-3UeetZ14mLZZWFjGKxcdN6FCEzuNqb5tpZ32KGGtBfTqcA8EZ78bLLg5intLOGsbaUsCNDWvMZP7RYpLzAD0oEQ=w645-h913-s-no-gm?authuser=0" 
@@ -76,6 +77,7 @@
           </div>
         </div>
       </div>
+      {% endif %}
 
       <div class="col-12 col-md-9 col-lg-6 px-4 d-flex flex-column">
         <header class="mb-4 text-center text-md-start">
@@ -92,6 +94,7 @@
         {% block content %}{% endblock %}
       </div>
 
+      {% if request.endpoint in ['auth.login', 'auth.register'] %}
       <div class="col-lg-2 d-none d-lg-block">
         <div class="h-100 px-2 d-flex flex-column justify-content-between">
           <img src="https://lh3.googleusercontent.com/pw/AP1GczPj_GChpHD6BndfyCXBQknmA814Fde4kYvSpjE8a9R0Til0_sT8OnQwM0oc80gxEUtAavig6S906iOFEv1OCc8Rl-1sa95P2zisLF1KQDq_i9g2cIZPUFzp7A_9J-t6ZbUL5YaBg8hX5-Afn7Hd7h0Dkg=w691-h913-s-no-gm?authuser=00" 
@@ -103,7 +106,7 @@
           </div>
         </div>
       </div>
-
+      {% endif %}
     </div>
   </main>
 
