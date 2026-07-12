@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar "{{ post['title'] }}"{% endblock %}
+
+{% block header %}
+<div class="mb-4">
+  <h2 class="fw-bold" style="color: #4a3f35;">📝 Editar Ficha: <span style="color: #d98a6c;">{{ post['title'] }}</span></h2>
+  <p class="text-muted">Modifique os campos necessários para atualizar as informações do seu OC.</p>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-0 rounded-4 bg-white mb-5">
+  <div class="card-body p-4 p-md-5">
+    
+    <form method="post">
+      
+      <h5 class="fw-bold mb-4" style="color: #d98a6c; border-bottom: 2px solid #faf6f0; padding-bottom: 8px;">📋 Informações Básicas</h5>
+      
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="nome" class="form-label fw-semibold">Nome do Personagem <span class="text-danger">*</span></label>
+          <input type="text" name="nome" id="nome" class="form-control" 
+                 value="{{ request.form['nome'] or post['title'] }}" required>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+          <label for="especie" class="form-label fw-semibold">Espécie / Raça <span class="text-danger">*</span></label>
+          <input type="text" name="especie" id="especie" class="form-control" 
+                 value="{{ request.form['especie'] or post['especie'] }}" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <label for="pronomes" class="form-label fw-semibold">Pronomes</label>
+          <input type="text" name="pronomes" id="pronomes" class="form-control" 
+                 value="{{ request.form['pronomes'] or post['pronomes'] or '' }}">
+        </div>
+        
+        <div class="col-md-4 mb-3">
+          <label for="alinhamento" class="form-label fw-semibold">Alinhamento</label>
+          <input type="text" name="alinhamento" id="alinhamento" class="form-control" 
+                 value="{{ request.form['alinhamento'] or post['alinhamento'] or '' }}">
+        </div>
+        
+        <div class="col-md-4 mb-3">
+          <label for="ocupacao" class="form-label fw-semibold">Ocupação / Classe</label>
+          <input type="text" name="ocupacao" id="ocupacao" class="form-control" 
+                 value="{{ request.form['ocupacao'] or post['ocupacao'] or '' }}">
+        </div>
+      </div>
+
+      <h5 class="fw-bold mt-4 mb-4" style="color: #d98a6c; border-bottom: 2px solid #faf6f0; padding-bottom: 8px;">🎨 Estética & História</h5>
+
+      <div class="mb-3">
+        <label for="imagem_url" class="form-label fw-semibold">Link da Imagem / Arte do OC</label>
+        <input type="url" name="imagem_url" id="imagem_url" class="form-control" 
+               value="{{ request.form['imagem_url'] or post['imagem_url'] or '' }}">
+      </div>
+
+      <div class="mb-4">
+        <label for="biografia" class="form-label fw-semibold">Biografia / História <span class="text-danger">*</span></label>
+        <textarea name="biografia" id="biografia" class="form-control" rows="6" required>{{ request.form['biografia'] or post['body'] }}</textarea>
+      </div>
+
+      <div class="d-flex justify-content-end gap-2 border-top pt-4">
+        <a href="{{ url_for('blog.index') }}" class="btn btn-light px-4 fw-bold text-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-primary px-5 fw-bold">Salvar Alterações ✨</button>
+      </div>
+    </form>
+    
+    <div class="mt-4 pt-4 border-top d-flex justify-content-start">
+      <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post" 
+            onsubmit="return confirm('Tem certeza absoluta que deseja deletar este personagem? Essa ação não pode ser desfeita.');">
+        <button type="submit" class="btn btn-sm btn-outline-danger px-3">
+          🗑️ Excluir Personagem
+        </button>
+      </form>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

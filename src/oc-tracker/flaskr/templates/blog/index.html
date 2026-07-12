@@ -6,7 +6,6 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
   <h2 class="fw-bold m-0" style="color: #4a3f35;">🎭 Meus Personagens</h2>
   {% if g.user %}
-    <!-- Botão elegante para criar novos OCs -->
     <a class="btn btn-primary shadow-sm fw-bold px-4" href="{{ url_for('blog.create') }}">
       ✨ Novo OC
     </a>
@@ -15,7 +14,6 @@
 {% endblock %}
 
 {% block content %}
-  <!-- Se não houver nenhum personagem cadastrado ainda -->
   {% if not posts %}
     <div class="card text-center p-5 border-0 shadow-sm rounded-4 bg-white opacity-75">
       <div class="card-body">
@@ -25,22 +23,18 @@
     </div>
   {% endif %}
 
-  <!-- Loop para renderizar cada OC como um Card bem estruturado -->
   {% for post in posts %}
     <div class="card shadow-sm border-0 rounded-4 mb-4 bg-white">
       <div class="card-body p-4">
         
-        <div class="d-flex justify-content-between align-items-start mb-3">
+        <div class="d-flex justify-content-between align-items-start mb-2">
           <div>
-            <!-- Nome do OC -->
             <h3 class="card-title fw-bold mb-1" style="color: #d98a6c;">{{ post['title'] }}</h3>
-            <!-- Criador e Data -->
             <div class="text-muted small">
               Criado por <strong>{{ post['username'] }}</strong> em {{ post['created'].strftime('%d/%m/%Y') }}
             </div>
           </div>
           
-          <!-- Botão de Editar (Apenas se o usuário logado for o dono do OC) -->
           {% if g.user['id'] == post['author_id'] %}
             <a class="btn btn-sm btn-outline-secondary px-3 rounded-pill" href="{{ url_for('blog.update', id=post['id']) }}">
               Editar
@@ -48,12 +42,38 @@
           {% endif %}
         </div>
         
+        <div class="d-flex flex-wrap gap-2 my-3">
+          <span class="badge rounded-pill px-3 py-2 text-dark font-monospace" style="background-color: #faf6f0; border: 1px solid #eadecc;">
+            🧬 {{ post['especie'] }}
+          </span>
+          
+          {% if post['pronomes'] %}
+          <span class="badge rounded-pill px-3 py-2 text-dark font-monospace" style="background-color: #faf6f0; border: 1px solid #eadecc;">
+            ✨ {{ post['pronomes'] }}
+          </span>
+          {% endif %}
+
+          {% if post['ocupacao'] %}
+          <span class="badge rounded-pill px-3 py-2 text-dark font-monospace" style="background-color: #faf6f0; border: 1px solid #eadecc;">
+            💼 {{ post['ocupacao'] }}
+          </span>
+          {% endif %}
+
+          {% if post['alinhamento'] %}
+          <span class="badge rounded-pill px-3 py-2 text-dark font-monospace" style="background-color: #faf6f0; border: 1px solid #eadecc;">
+            ⚖️ {{ post['alinhamento'] }}
+          </span>
+          {% endif %}
+        </div>
+        
         <hr class="my-3" style="border-color: #faf6f0;">
         
-        <!-- Descrição / História do OC -->
-        <p class="card-text text-secondary style-body" style="white-space: pre-line; line-height: 1.6;">
-          {{ post['body'] }}
-        </p>
+        <div class="mt-2">
+          <h6 class="fw-bold small text-uppercase tracking-wide mb-2" style="color: #a89482;">História & Biografia</h6>
+          <p class="card-text text-secondary style-body" style="white-space: pre-line; line-height: 1.6;">
+            {{ post['body'] }}
+          </p>
+        </div>
         
       </div>
     </div>
