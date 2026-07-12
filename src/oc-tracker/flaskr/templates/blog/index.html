@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Personagens{% endblock %}
+
+{% block header %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-bold m-0" style="color: #4a3f35;">🎭 Meus Personagens</h2>
+  {% if g.user %}
+    <!-- Botão elegante para criar novos OCs -->
+    <a class="btn btn-primary shadow-sm fw-bold px-4" href="{{ url_for('blog.create') }}">
+      ✨ Novo OC
+    </a>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block content %}
+  <!-- Se não houver nenhum personagem cadastrado ainda -->
+  {% if not posts %}
+    <div class="card text-center p-5 border-0 shadow-sm rounded-4 bg-white opacity-75">
+      <div class="card-body">
+        <h4 class="fw-bold mb-3">Nenhum personagem por aqui...</h4>
+        <p class="text-muted mb-0">Que tal criar a primeira ficha para inaugurar o seu OC Tracker?</p>
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- Loop para renderizar cada OC como um Card bem estruturado -->
+  {% for post in posts %}
+    <div class="card shadow-sm border-0 rounded-4 mb-4 bg-white">
+      <div class="card-body p-4">
+        
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div>
+            <!-- Nome do OC -->
+            <h3 class="card-title fw-bold mb-1" style="color: #d98a6c;">{{ post['title'] }}</h3>
+            <!-- Criador e Data -->
+            <div class="text-muted small">
+              Criado por <strong>{{ post['username'] }}</strong> em {{ post['created'].strftime('%d/%m/%Y') }}
+            </div>
+          </div>
+          
+          <!-- Botão de Editar (Apenas se o usuário logado for o dono do OC) -->
+          {% if g.user['id'] == post['author_id'] %}
+            <a class="btn btn-sm btn-outline-secondary px-3 rounded-pill" href="{{ url_for('blog.update', id=post['id']) }}">
+              Editar
+            </a>
+          {% endif %}
+        </div>
+        
+        <hr class="my-3" style="border-color: #faf6f0;">
+        
+        <!-- Descrição / História do OC -->
+        <p class="card-text text-secondary style-body" style="white-space: pre-line; line-height: 1.6;">
+          {{ post['body'] }}
+        </p>
+        
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
