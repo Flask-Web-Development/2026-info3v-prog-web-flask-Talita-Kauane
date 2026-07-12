@@ -24,57 +24,77 @@
   {% endif %}
 
   {% for post in posts %}
-    <div class="card shadow-sm border-0 rounded-4 mb-4 bg-white">
-      <div class="card-body p-4">
+    <div class="card shadow-sm border-0 rounded-4 mb-4 bg-white overflow-hidden">
+      <div class="row g-0">
         
-        <div class="d-flex justify-content-between align-items-start mb-2">
-          <div>
-            <h3 class="card-title fw-bold mb-1" style="color: #d98a6c;">{{ post['title'] }}</h3>
-            <div class="text-muted small">
-              Criado por <strong>{{ post['username'] }}</strong> em {{ post['created'].strftime('%d/%m/%Y') }}
+        <div class="col-md-3 col-sm-4 bg-light d-flex align-items-center justify-content-center" style="min-height: 200px;">
+          {% if post['imagem_url'] %}
+            <img src="{{ post['imagem_url'] }}" 
+                 class="w-100 h-100" 
+                 style="object-fit: cover; min-height: 200px; max-height: 280px;" 
+                 alt="Foto de {{ post['title'] }}">
+          {% else %}
+            <div class="text-center text-muted p-4">
+              <span style="font-size: 3.5rem;">🎭</span>
+              <div class="small mt-1 text-uppercase fw-bold tracking-wider" style="font-size: 0.7rem; color: #a89482;">Sem Foto</div>
             </div>
+          {% endif %}
+        </div>
+
+        <div class="col-md-9 col-sm-8">
+          <div class="card-body p-4">
+            
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <div>
+                <h3 class="card-title fw-bold mb-1" style="color: #d98a6c;">{{ post['title'] }}</h3>
+                <div class="text-muted small">
+                  Criado por <strong>{{ post['username'] }}</strong> em {{ post['created'].strftime('%d/%m/%Y') }}
+                </div>
+              </div>
+              
+              {% if g.user['id'] == post['author_id'] %}
+                <a class="btn btn-sm btn-outline-secondary px-3 rounded-pill" href="{{ url_for('blog.update', id=post['id']) }}">
+                  Editar
+                </a>
+              {% endif %}
+            </div>
+            
+            <div class="d-flex flex-wrap gap-2 my-3">
+              <span class="badge rounded-pill px-3 py-2 text-dark font-monospace" style="background-color: #faf6f0; border: 1px solid #eadecc;">
+                🧬 {{ post['especie'] }}
+              </span>
+              
+              {% if post['pronomes'] %}
+              <span class="badge rounded-pill px-3 py-2 text-dark font-monospace" style="background-color: #faf6f0; border: 1px solid #eadecc;">
+                ✨ {{ post['pronomes'] }}
+              </span>
+              {% endif %}
+
+              {% if post['ocupacao'] %}
+              <span class="badge rounded-pill px-3 py-2 text-dark font-monospace" style="background-color: #faf6f0; border: 1px solid #eadecc;">
+                💼 {{ post['ocupacao'] }}
+              </span>
+              {% endif %}
+
+              {% if post['alinhamento'] %}
+              <span class="badge rounded-pill px-3 py-2 text-dark font-monospace" style="background-color: #faf6f0; border: 1px solid #eadecc;">
+                ⚖️ {{ post['alinhamento'] }}
+              </span>
+              {% endif %}
+            </div>
+            
+            <hr class="my-3" style="border-color: #faf6f0;">
+            
+            <div class="mt-2">
+              <h6 class="fw-bold small text-uppercase tracking-wide mb-2" style="color: #a89482;">História & Biografia</h6>
+              <p class="card-text text-secondary style-body mb-0" style="white-space: pre-line; line-height: 1.6;">
+                {{ post['body'] }}
+              </p>
+            </div>
+            
           </div>
-          
-          {% if g.user['id'] == post['author_id'] %}
-            <a class="btn btn-sm btn-outline-secondary px-3 rounded-pill" href="{{ url_for('blog.update', id=post['id']) }}">
-              Editar
-            </a>
-          {% endif %}
         </div>
-        
-        <div class="d-flex flex-wrap gap-2 my-3">
-          <span class="badge rounded-pill px-3 py-2 text-dark font-monospace" style="background-color: #faf6f0; border: 1px solid #eadecc;">
-            🧬 {{ post['especie'] }}
-          </span>
-          
-          {% if post['pronomes'] %}
-          <span class="badge rounded-pill px-3 py-2 text-dark font-monospace" style="background-color: #faf6f0; border: 1px solid #eadecc;">
-            ✨ {{ post['pronomes'] }}
-          </span>
-          {% endif %}
 
-          {% if post['ocupacao'] %}
-          <span class="badge rounded-pill px-3 py-2 text-dark font-monospace" style="background-color: #faf6f0; border: 1px solid #eadecc;">
-            💼 {{ post['ocupacao'] }}
-          </span>
-          {% endif %}
-
-          {% if post['alinhamento'] %}
-          <span class="badge rounded-pill px-3 py-2 text-dark font-monospace" style="background-color: #faf6f0; border: 1px solid #eadecc;">
-            ⚖️ {{ post['alinhamento'] }}
-          </span>
-          {% endif %}
-        </div>
-        
-        <hr class="my-3" style="border-color: #faf6f0;">
-        
-        <div class="mt-2">
-          <h6 class="fw-bold small text-uppercase tracking-wide mb-2" style="color: #a89482;">História & Biografia</h6>
-          <p class="card-text text-secondary style-body" style="white-space: pre-line; line-height: 1.6;">
-            {{ post['body'] }}
-          </p>
-        </div>
-        
       </div>
     </div>
   {% endfor %}
