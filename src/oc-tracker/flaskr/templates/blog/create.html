@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Criar Personagem{% endblock %}
+
+{% block header %}
+<div class="mb-4">
+  <h2 class="fw-bold" style="color: #4a3f35;">✨ Nova Ficha de OC</h2>
+  <p class="text-muted">Preencha os detalhes abaixo e dê vida ao seu personagem!</p>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-0 rounded-4 bg-white mb-5">
+  <div class="card-body p-4 p-md-5">
+    
+    <form method="post">
+      
+      <h5 class="fw-bold mb-4" style="color: #d98a6c; border-bottom: 2px solid #faf6f0; padding-bottom: 8px;">📋 Informações Básicas</h5>
+      
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="nome" class="form-label fw-semibold">Nome do Personagem <span class="text-danger">*</span></label>
+          <input type="text" name="nome" id="nome" class="form-control" placeholder="Ex: Arthur Cervero" value="{{ request.form['nome'] }}" required>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+          <label for="especie" class="form-label fw-semibold">Espécie / Raça <span class="text-danger">*</span></label>
+          <input type="text" name="especie" id="especie" class="form-control" placeholder="Ex: Humano, Elfo, Vampiro" value="{{ request.form['especie'] }}" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <label for="pronomes" class="form-label fw-semibold">Pronomes</label>
+          <input type="text" name="pronomes" id="pronomes" class="form-control" placeholder="Ex: Ele/Dele, Ela/Dela" value="{{ request.form['pronomes'] }}">
+        </div>
+        
+        <div class="col-md-4 mb-3">
+          <label for="alinhamento" class="form-label fw-semibold">Alinhamento</label>
+          <input type="text" name="alinhamento" id="alinhamento" class="form-control" placeholder="Ex: Neutro e Bom, Caótico e Neutro" value="{{ request.form['alinhamento'] }}">
+        </div>
+        
+        <div class="col-md-4 mb-3">
+          <label for="ocupacao" class="form-label fw-semibold">Ocupação</label>
+          <input type="text" name="ocupacao" id="ocupacao" class="form-control" placeholder="Ex: Guarda, Estudante" value="{{ request.form['ocupacao'] }}">
+        </div>
+      </div>
+
+      <h5 class="fw-bold mt-4 mb-4" style="color: #d98a6c; border-bottom: 2px solid #faf6f0; padding-bottom: 8px;">🎨 Estética & História</h5>
+
+      <div class="mb-3">
+        <label for="imagem_url" class="form-label fw-semibold">Link da Imagem / Arte do OC</label>
+        <input type="url" name="imagem_url" id="imagem_url" class="form-control" placeholder="https://exemplo.com/sua-arte.jpg" value="{{ request.form['imagem_url'] }}">
+        <div class="form-text text-muted">Cole o link direto da imagem (ImgBB, Postimages, etc.) para ilustrar a ficha futuramente.</div>
+      </div>
+
+      <div class="mb-4">
+        <label for="biografia" class="form-label fw-semibold">Biografia / História <span class="text-danger">*</span></label>
+        <textarea name="biografia" id="biografia" class="form-control" rows="6" placeholder="Conte um pouco sobre a personalidade, passado e motivações do seu personagem..." required>{{ request.form['biografia'] }}</textarea>
+      </div>
+
+      <div class="d-flex justify-content-end gap-2 mt-4">
+        <a href="{{ url_for('blog.index') }}" class="btn btn-light px-4 fw-bold text-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-primary px-5 fw-bold">Salvar OC ✨</button>
+      </div>
+
+    </form>
+    
+  </div>
+</div>
+{% endblock %}
